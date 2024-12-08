@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Title>FileListSharp</Title>
+        <Authors>Alex Kovacs</Authors>
+        <Description>A FileList API Wrapper for .NET</Description>
+        <PackageLicenseUrl>https://github.com/alexthemaster/FileListSharp/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/alexthemaster/FileListSharp</RepositoryUrl>
+        <PackageTags>tracker, filelist, torrent tracker, private torrent</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    </ItemGroup>
+
+</Project>

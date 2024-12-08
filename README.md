@@ -12,7 +12,7 @@ Usage example:
 using FileListSharp;
 using FileListSharp.Builders;
 
-var FlClient = new FileList("username", "passkey");
+var flClient = new FileList("username", "passkey");
 
 var searchParams = new FileListSearchParams()
     .Type("name")
@@ -26,10 +26,10 @@ var searchParams = new FileListSearchParams()
     .Episode(5)
     .FreeLeech(true);
 
-var searchedList = await FlClient.SearchAsync(searchParams);
+var searchedList = await flClient.SearchAsync(searchParams);
 
 var latestParams = new FileListLatestParams().Imdb("tt14527626").Categories([21, 20]);
-var latest = (await fl.LatestAsync(latestParams))!.First();
+var latest = (await flClient.LatestAsync(latestParams))!.First();
 Console.WriteLine($"Just looked up torrent {latest.Name} with the ID of {latest.Id}, size of {latest.Size/1024/1024/1024}GB, uploaded on {latest.UploadDate}. It has {latest.Seeders} seeders and {latest.Leechers} leechers.");
 
 ```

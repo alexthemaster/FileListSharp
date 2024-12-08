@@ -35,13 +35,13 @@ public class FileList
     /// var searchParams = new FileListSearchParams().Query("The Haunting of Hill House").Categories([21]).FreeLeech(true);
     /// </code>
     /// </example>
-    /// <exception cref="Exception">If API returns an error or rate limit is reached</exception>
+    /// <exception cref="Exception">If the API returns an error or rate limit is reached</exception>
     /// <returns>FileListTorrent</returns>
     public async Task<List<FileListTorrent>?> SearchAsync(FileListSearchParams searchParams)
     {
-        var parameters = searchParams.ToString();
-        parameters += "&action=search-torrents&output=json";
-        return await _query(parameters);
+        var parameters = new StringBuilder(searchParams.ToString());
+        parameters.Append("&action=search-torrents&output=json");
+        return await _Query(parameters.ToString());
     }
 
     /// <summary>
@@ -54,16 +54,16 @@ public class FileList
     /// var latestParams = new FileListLatestParams().Imdb("tt14527626").Categories([21]);
     /// </code>
     /// </example>
-    /// <exception cref="Exception">If API returns an error or rate limit is reached</exception>
+    /// <exception cref="Exception">If the API returns an error or rate limit is reached</exception>
     /// <returns>FileListTorrent</returns>
     public async Task<List<FileListTorrent>?> LatestAsync(FileListLatestParams searchParams)
     {
-        var parameters = searchParams.ToString();
-        parameters += "&action=latest-torrents&output=json";
-        return await _query(parameters);
+        var parameters = new StringBuilder(searchParams.ToString());
+        parameters.Append("&action=latest-torrents&output=json");
+        return await _Query(parameters.ToString());
     }
 
-    private async Task<List<FileListTorrent>?> _query(string parameters)
+    private async Task<List<FileListTorrent>?> _Query(string parameters)
     {
         var url = $"{ApiUrl}?{HttpUtility.UrlDecode(parameters)}";
         var response = await _client.GetAsync(url);

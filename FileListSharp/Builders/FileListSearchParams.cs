@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
+using System.Text;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 
 namespace FileListSharp.Builders;
 
@@ -21,17 +20,17 @@ public partial class FileListSearchParams
     public override string ToString()
     {
         if (_query is null) throw new ArgumentNullException("Query", $"The query for {GetType().Name} cannot be null.");
-        var final = $"type={_type}&query={_query}";
+        var final = new StringBuilder($"type={_type}&query={_query}");
             
-        if (_category is not null) final += $"&category={string.Join(',', _category)}";
-        if (_moderated is not null) final += $"&moderated={_moderated}";
-        if (_internal is not null) final += $"&internal={_internal}";
-        if (_freeleech is not null) final += $"&freeleech={_freeleech}";
-        if (_doubleup is not null) final += $"&doubleup={_doubleup}";
-        if (_season is not null) final += $"&season={_season}";
-        if (_episode is not null) final += $"&episode={_episode}";
+        if (_category is not null) final.Append($"&category={string.Join(',', _category)}");
+        if (_moderated is not null) final.Append($"&moderated={_moderated}");
+        if (_internal is not null) final.Append($"&internal={_internal}");
+        if (_freeleech is not null) final.Append($"&freeleech={_freeleech}");
+        if (_doubleup is not null) final.Append($"&doubleup={_doubleup}");
+        if (_season is not null) final.Append($"&season={_season}");
+        if (_episode is not null) final.Append($"&episode={_episode}");
         
-        return final;
+        return final.ToString();
     }
 
     /// <summary>

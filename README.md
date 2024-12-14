@@ -5,9 +5,11 @@
 ## [Install from NuGet](https://www.nuget.org/packages/FileListSharp)
 
 ## Usage
+
 FileListSharp uses builders for your convenience! These are FileListSearchParams and FileListLatestParams in particular.
 
 Usage example:
+
 ```csharp
 using FileListSharp;
 using FileListSharp.Builders;
@@ -30,7 +32,7 @@ var searchedList = await flClient.SearchAsync(searchParams);
 
 var latestParams = new FileListLatestParams().Imdb("tt14527626").Categories([21, 20]);
 var latest = (await flClient.LatestAsync(latestParams))!.First();
-Console.WriteLine($"Just looked up torrent {latest.Name} with the ID of {latest.Id}, size of {latest.Size/1024/1024/1024}GB, uploaded on {latest.UploadDate}. It has {latest.Seeders} seeders and {latest.Leechers} leechers.");
+Console.WriteLine($"Just looked up torrent {latest.Name} with the ID of {latest.Id}, size of {latest.Size/1024/1024/1024}GB, uploaded on {latest.UploadDate}. It has {latest.Seeders} seeders and {latest.Leechers} leechers. Is it freeleech? {latest.FreeLeech == 1}");
 
 ```
 

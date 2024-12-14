@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Web;
-using FileListSharp.Builders;   
+using FileListSharp.Builders;
 
 namespace FileListSharp;
 

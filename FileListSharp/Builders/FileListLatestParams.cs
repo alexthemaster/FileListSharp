@@ -1,4 +1,4 @@
-using System.Dynamic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace FileListSharp.Builders;
@@ -11,13 +11,13 @@ public partial class FileListLatestParams
 
     public override string ToString()
     {
-        var final = "";
+        var final = new StringBuilder();
 
-        if (_limit is not null) final += $"&limit={_limit}";
-        if (_imdb is not null) final += $"&imdb={_imdb}";
-        if (_category is not null) final += $"&category={string.Join(",", _category)}";
+        if (_limit is not null) final.Append($"&limit={_limit}");
+        if (_imdb is not null) final.Append($"&imdb={_imdb}");
+        if (_category is not null) final.Append($"&category={string.Join(",", _category)}");
 
-        return final;
+        return final.ToString();
     }
 
     /// <summary>

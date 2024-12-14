@@ -1,120 +1,125 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace FileListSharp.Builders;
 
-public class FileListTorrent(
-    int id,
-    string name,
-    string? imdb,
-    bool freeleech,
-    bool doubleup,
-    [JsonProperty("upload_date")] string uploadDate,
-    [JsonProperty("download_link")] string downloadLink,
-    long size,
-    [JsonProperty("internal")] int internalnum,
-    int moderated,
-    string category,
-    int seeders,
-    int leechers,
-    [JsonProperty("times_completed")] int timesCompleted,
-    int comments,
-    int files,
-    string description,
-    [JsonProperty("tv")] 
-    Dictionary<string,int?> tv)
+public record FileListTorrent
 {
     /// <summary>
     /// The ID of the torrent
     /// </summary>
-    public readonly int Id = id;
+    [JsonPropertyName("id")]
+    public required int Id { get; init; }
 
     /// <summary>
     /// The full name of the torrent
     /// </summary>
-    public readonly string Name = name;
+    [JsonPropertyName("name")]
+    public required string Name { get; init; }
 
     /// <summary>
     /// The IMDb ID of the torrent's content
     /// </summary>
-    public readonly string? Imdb = imdb;
+    [JsonPropertyName("imdb")]
+    public string? Imdb { get; init; }
 
     /// <summary>
     /// Whether this torrent is freeleech
     /// </summary>
-    public readonly bool Freeleech = freeleech;
+    [JsonPropertyName("freeleech")]
+    public required int FreeLeech { get; init; }
 
     /// <summary>
     /// Whether this torrent counts as a double upload
     /// </summary>
-    public readonly bool Doubleup = doubleup;
+    [JsonPropertyName("doubleup")]
+    public required int DoubleUp { get; init; }
 
     /// <summary>
     /// The upload date of the torrent
     /// </summary>
-    public readonly string UploadDate = uploadDate;
+    [JsonPropertyName("upload_date")]
+    public required string UploadDate { get; init; }
 
     /// <summary>
     /// URL used for downloading this torrent
     /// </summary>
-    public readonly string DownloadLink = downloadLink;
+    [JsonPropertyName("download_link")]
+    public required string DownloadLink { get; init; }
 
     /// <summary>
     /// The size of the torrent in bytes
     /// </summary>
-    public readonly long Size = size;
+    [JsonPropertyName("size")]
+    public long Size { get; init; }
 
     /// <summary>
     /// Whether this torrent was uploaded by the internal FileList team
     /// </summary>
-    public readonly bool Internal = internalnum is 1;
+    [JsonPropertyName("internal")]
+    public int Internal { get; init; }
 
     /// <summary>
     /// Whether this torrent is moderated
     /// </summary>
-    public readonly bool Moderated = moderated is 1;
+    [JsonPropertyName("moderated")]
+    public int Moderated { get; init; }
 
     /// <summary>
     /// The category this torrent is in
     /// </summary>
-    public readonly string Category = category;
+    [JsonPropertyName("category")]
+    public required string Category { get; init; }
 
     /// <summary>
     /// The number of people seeding this torrent
     /// </summary>
-    public readonly int Seeders = seeders;
+    [JsonPropertyName("seeders")]
+    public int Seeders { get; init; }
 
     /// <summary>
     /// The number of people leeching (downloading) this torrent
     /// </summary>
-    public readonly int Leechers = leechers;
+    [JsonPropertyName("leechers")]
+    public int Leechers { get; init; }
 
     /// <summary>
     /// The number of times this torrent was snatched (downloaded)
     /// </summary>
-    public readonly int TimesCompleted = timesCompleted;
+    [JsonPropertyName("times_completed")]
+    public int TimesCompleted { get; init; }
 
     /// <summary>
     /// The number of comments left on this torrent
     /// </summary>
-    public readonly int Comments = comments;
+    [JsonPropertyName("comments")]
+    public int Comments { get; init; }
 
     /// <summary>
     /// The number of files this torrent contains
     /// </summary>
-    public readonly int Files = files;
+    [JsonPropertyName("files")]
+    public int Files { get; init; }
 
     /// <summary>
     /// A small description of the torrent
     /// </summary>
-    public readonly string Description = description;
+    public string? Description { get; init; }
 
+    [JsonPropertyName("tv")] public Tv? Tv { get; init; }
+}
+
+public record Tv
+{
     /// <summary>
     /// The season of the TV show contained in this torrent (where applicable) 
-    /// </summary>
-    public readonly int? TvSeason = tv["season"];
+    /// </summary>   
+    [JsonPropertyName("season")]
+    public int? Season { get; init; }
 
     /// <summary>
     /// The episode of the TV show contained in this torrent (where applicable)
     /// </summary>
-    public readonly int? TvEpisode = tv["episode"];
+    [JsonPropertyName("episode")]
+    public int? Episode { get; init; }
 }

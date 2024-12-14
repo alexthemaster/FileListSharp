@@ -7,13 +7,14 @@
         <Title>FileListSharp</Title>
         <Authors>Alex Kovacs</Authors>
         <Description>A FileList API Wrapper for .NET</Description>
-        <PackageLicenseUrl>https://github.com/alexthemaster/FileListSharp/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/alexthemaster/FileListSharp</RepositoryUrl>
         <PackageTags>tracker, filelist, torrent tracker, private torrent</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <None Include="../README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>

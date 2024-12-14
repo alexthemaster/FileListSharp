@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Web;
-using Newtonsoft.Json;
-using FileListSharp.Builders;
+using FileListSharp.Builders;   
 
 namespace FileListSharp;
 
@@ -70,14 +70,17 @@ public class FileList
         if (!response.IsSuccessStatusCode)
         {
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            {
                 throw new Exception("Rate limit reached, try again later.");
-            var error = JsonConvert.DeserializeObject<FileListError>(await response.Content.ReadAsStringAsync());
+            }
+
+            var error = JsonSerializer.Deserialize<FileListError>(await response.Content.ReadAsStringAsync());
             throw new Exception($"Failed to successfully query the API, error: {error.Error ?? "Unknown"}");
         }
 
         var content = await response.Content.ReadAsStringAsync();
 
-        return JsonConvert.DeserializeObject<List<FileListTorrent>>(content);
+        return JsonSerializer.Deserialize<List<FileListTorrent>>(content);
     }
 }
 

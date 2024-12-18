@@ -18,7 +18,7 @@ var flClient = new FileList("username", "passkey");
 
 var searchParams = new FileListSearchParams()
     .Type("name")
-    .Query("The Haunting of Hill House")
+    .Query("Name of a show")
     // Everything below is optional
     .Categories([21])
     .Moderated(false)
@@ -29,8 +29,16 @@ var searchParams = new FileListSearchParams()
     .FreeLeech(true);
 
 var searchedList = await flClient.SearchAsync(searchParams);
+if (searchedList.Count > 0)
+{
+    Console.WriteLine($"Here's the first result for the torrent you searched for: ${searchedList.First()}");
+}
 
-var latestParams = new FileListLatestParams().Imdb("tt14527626").Categories([21, 20]);
+var latestParams = new FileListLatestParams()
+    // All are optional
+    .Imdb("tt14527626")
+    .Limit(20)
+    .Categories([21, 20]);
 var latest = (await flClient.LatestAsync(latestParams))!.First();
 Console.WriteLine($"Just looked up torrent {latest.Name} with the ID of {latest.Id}, size of {latest.Size/1024/1024/1024}GB, uploaded on {latest.UploadDate}. It has {latest.Seeders} seeders and {latest.Leechers} leechers. Is it freeleech? {latest.FreeLeech == 1}");
 

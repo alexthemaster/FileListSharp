@@ -107,10 +107,10 @@ public record FileListTorrent
     /// </summary>
     public string? Description { get; init; }
 
-    [JsonPropertyName("tv")] public Tv? Tv { get; init; }
+    [JsonPropertyName("tv")] public TV? TV { get; init; }
 }
 
-public record Tv
+public record TV
 {
     /// <summary>
     /// The season of the TV show contained in this torrent (where applicable) 

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Web;
@@ -37,7 +38,7 @@ public class FileList
     /// </example>
     /// <exception cref="Exception">If the API returns an error or rate limit is reached</exception>
     /// <returns>FileListTorrent</returns>
-    public async Task<List<FileListTorrent>?> SearchAsync(FileListSearchParams searchParams)
+    public async Task<List<FileListTorrent>> SearchAsync(FileListSearchParams searchParams)
     {
         var parameters = new StringBuilder(searchParams.ToString());
         parameters.Append("&action=search-torrents&output=json");
@@ -56,14 +57,14 @@ public class FileList
     /// </example>
     /// <exception cref="Exception">If the API returns an error or rate limit is reached</exception>
     /// <returns>FileListTorrent</returns>
-    public async Task<List<FileListTorrent>?> LatestAsync(FileListLatestParams searchParams)
+    public async Task<List<FileListTorrent>> LatestAsync(FileListLatestParams searchParams)
     {
         var parameters = new StringBuilder(searchParams.ToString());
         parameters.Append("&action=latest-torrents&output=json");
         return await _Query(parameters.ToString());
     }
 
-    private async Task<List<FileListTorrent>?> _Query(string parameters)
+    private async Task<List<FileListTorrent>> _Query(string parameters)
     {
         var url = $"{ApiUrl}?{HttpUtility.UrlDecode(parameters)}";
         var response = await _client.GetAsync(url);
@@ -74,13 +75,13 @@ public class FileList
                 throw new Exception("Rate limit reached, try again later.");
             }
 
-            var error = JsonSerializer.Deserialize<FileListError>(await response.Content.ReadAsStringAsync());
+            var error = await response.Content.ReadFromJsonAsync<FileListError>();
             throw new Exception($"Failed to successfully query the API, error: {error.Error ?? "Unknown"}");
         }
 
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadFromJsonAsync<List<FileListTorrent>>();
 
-        return JsonSerializer.Deserialize<List<FileListTorrent>>(content);
+        return content ?? [];
     }
 }
 
